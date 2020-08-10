@@ -66,18 +66,17 @@ artists.put('/:artistID', (req, res, next) => {
         if (artist.isCurrentlyEmployed !== 0) {
             artist.isCurrentlyEmployed = 1;
         }
-        artist.id = req.artist.id;
         db.run(`UPDATE Artist SET
             name='${artist.name}',
             date_of_birth='${artist.dateOfBirth}',
             biography='${artist.biography}',
             is_currently_employed=${artist.isCurrentlyEmployed}
-        WHERE id=${artist.id};`, function(err) {
+        WHERE id=${req.artist.id};`, function(err) {
             if (err) {
                 console.log(err);
                 next(err);
             } else {
-                db.get(`SELECT * FROM Artist WHERE id=${artist.id};`, [], (err, artist) => {
+                db.get(`SELECT * FROM Artist WHERE id=${req.artist.id};`, [], (err, artist) => {
                     if (err) {
                         next(err);
                     } else {
