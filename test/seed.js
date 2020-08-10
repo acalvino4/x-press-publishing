@@ -1,5 +1,5 @@
-const sqlite3 = require('sqlite3');
-const db = new sqlite3.Database('./test/test.sqlite');
+import sqlite3 from 'sqlite3';
+const db = new sqlite3.Database(process.env.DATABASE || './test/test.sqlite');
 
 function seedArtistDatabase(done) {
   db.serialize(function() {
@@ -50,8 +50,4 @@ function seedIssueDatabase(done) {
   });
 }
 
-module.exports = {
-  seedArtistDatabase: seedArtistDatabase,
-  seedSeriesDatabase: seedSeriesDatabase,
-  seedIssueDatabase: seedIssueDatabase
-};
+export default {seedArtistDatabase, seedSeriesDatabase, seedIssueDatabase};

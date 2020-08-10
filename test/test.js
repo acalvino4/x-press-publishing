@@ -1,15 +1,13 @@
-process.env.PORT = 8081;
-process.env.TEST_DATABASE = './test/test.sqlite';
+import chai from 'chai';
+const expect = chai.expect;
+import request from 'supertest';
+import sqlite3 from 'sqlite3';
 
-const expect = require('chai').expect;
-const request = require('supertest');
-const sqlite3 = require('sqlite3');
-
-const app = require('../server.js');
-const seed = require('./seed.js');
+import app from '../server.js';
+import seed from './seed.js';
 
 const prodDb = new sqlite3.Database('./database.sqlite');
-let testDb = new sqlite3.Database(process.env.TEST_DATABASE);
+let testDb = new sqlite3.Database(process.env.DATABASE || '.test/test.sqlite');
 
 describe('Artist Table', function() {
   it('should exist', function(done) {
@@ -174,19 +172,6 @@ describe('Issue Table', function() {
     });
   });
 
-  it('should have a required name column', function(done) {
-    prodDb.run("INSERT INTO Issue (issue_number, publication_date, artist_id, series_id) VALUES (1, 'January 1, 1980', 1, 1)", function(error) {
-      if (error && error.toString().includes('NOT NULL constraint failed')) {
-        done();
-      } else if (!error) {
-        prodDb.run(`DELETE FROM Issue WHERE Issue.id = ${this.lastID}`, () => {
-          done(new Error('Issue without name was created.'));
-        });
-      } else {
-        done(new Error(error));
-      }
-    });
-  });
 
   it('should have a required name column', function(done) {
     prodDb.run("INSERT INTO Issue (issue_number, publication_date, artist_id, series_id) VALUES (1, 'January 1, 1980', 1, 1)", function(error) {

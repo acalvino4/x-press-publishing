@@ -1,5 +1,5 @@
-const sqlite3 = require('sqlite3');
-const db = new sqlite3.Database('./database.sqlite');
+import sqlite3 from 'sqlite3';
+const db = new sqlite3.Database(process.env.DATABASE || './database.sqlite');
 
 let artistId, seriesId;
 
