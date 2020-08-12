@@ -16,9 +16,11 @@ app.use(morgan('dev'));
 const PORT = process.env.PORT || 4000;
 
 app.use('/api', apiRouter);
+app.use(express.static('public'));
 
 app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}...`)
-})
+  // eslint-disable-next-line no-console
+  console.log(`Listening on port ${PORT}...`);
+});
 
 export default app;

@@ -1,5 +1,3 @@
-'use strict';
-
 const webpack = require('webpack'); // eslint-disable-line no-unused-vars
 
 module.exports = {
@@ -23,6 +21,6 @@ module.exports = {
     ]
   },
   node: {
-    fs: "empty"
+    fs: 'empty'
   }
 };
